@@ -1,7 +1,6 @@
 /*
  * Rule: Detects properties for LTR text styling the require equivalent RTL styling.
  */
-/*global CSSLint*/
 CSSLint.addRule({
 
     //rule information
@@ -14,7 +13,6 @@ CSSLint.addRule({
     init: function(parser, reporter){
         "use strict";
         var properties = {
-            "border": 1,
             "border-left": 1,
             "border-right": 1,
             "border-radius": 1,
@@ -22,25 +20,49 @@ CSSLint.addRule({
             "border-top-left-radius": 1,
             "border-bottom-right-radius": 1,
             "border-bottom-left-radius": 1,
-            padding: 1,
             "padding-left": 1,
             "padding-right": 1,
-            margin: 1,
             "margin-left": 1,
             "margin-right": 1,
             "text-align": 1,
-            float: 1,
             clear: 1,
             background: 1,
             "background-position": 1,
             left: 1,
             right: 1
+        },
+        potentialProperties = {
+            padding: 1,
+            margin: 1,
+            border: 1,
+            float: 1,
         };
 
         parser.addListener("property", function(event){
             var name = event.property.toString().toLowerCase();
-            if (properties[name]) {
-                reporter.report("Using " + name + "can require an equivalent rule for RTL styling.");
+            if (properties[name]){
+                reporter.warning("Using " + name + " can require an equivalent rule for RTL styling.");
+            }
+            else if (potentialProperties[name]){
+                // Check to see if they are actually affecting LTR.
+                switch(name){
+                case "padding":
+                    //do something
+                    break;
+
+                case "margin":
+                    //do something
+                    break;
+
+                case "border":
+                    //do something
+                    break;
+
+                case "float":
+                    //do something
+                    break;
+
+                }
             }
         });
     }
