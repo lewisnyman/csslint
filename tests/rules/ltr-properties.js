@@ -10,7 +10,7 @@
             var result = CSSLint.verify(".foo { padding-right: 10px; }", { "ltr-properties": 1 });
             Assert.areEqual(1, result.messages.length);
             Assert.areEqual("warning", result.messages[0].type);
-            Assert.areEqual("Using padding-right can require an equivalent rule for RTL styling.", result.messages[0].message);
+            Assert.areEqual("Using padding-right could require an equivalent rule for RTL styling.", result.messages[0].message);
         },
 
         "Using font-size should result no warning ": function(){

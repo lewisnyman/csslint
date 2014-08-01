@@ -39,13 +39,19 @@ CSSLint.addRule({
         };
 
         parser.addListener("property", function(event){
-            var name = event.property.toString().toLowerCase();
+            var rule = this,
+                name    = event.property.toString().toLowerCase(),
+                // value   = event.value.toString(),
+                line    = event.line,
+                col     = event.col;
+
             if (properties[name]){
-                reporter.warning("Using " + name + " can require an equivalent rule for RTL styling.");
+                reporter.report("Using " + name + " could require an equivalent rule for RTL styling.", line, col, rule);
             }
             else if (potentialProperties[name]){
                 // Check to see if they are actually affecting LTR.
                 switch(name){
+
                 case "padding":
                     //do something
                     break;
